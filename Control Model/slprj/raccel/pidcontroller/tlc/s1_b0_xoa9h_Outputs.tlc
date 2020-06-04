@@ -1,0 +1,99 @@
+%implements s1_b0_xoa9h_Outputs "C"
+
+%function Outputs(block, system) Output
+%assign cfgTxt = ""
+%openfile cfgTxt
+%assign localVarDecl = ""
+%openfile localVarDecl
+
+real_T tmp;
+%closefile localVarDecl
+%assign tlcOutputsFcnOfS1B0 = OpaqueTLCBlockFcn("Outputs", 1, 0, 0, 2, 0)
+%assign tlcOutputsFcnOfS1B2 = OpaqueTLCBlockFcn("Outputs", 1, 2, 0, 2, 1)
+%assign tlcOutputsFcnOfS1B3 = OpaqueTLCBlockFcn("Outputs", 1, 3, 0, 2, 2)
+%assign tlcOutputsFcnOfS1B4 = OpaqueTLCBlockFcn("Outputs", 1, 4, 0, 2, 3)
+%<SLibGetRootInportsFromFile(system, TLC_FALSE)>
+%<SLibGenerateExtModeOutput(system)>
+if (%<(SLibCGIRIsSampleHit(1, 1))>) {
+    rtDW.blvhujflm2 = (%<(SLibCG_SE(LibGetTaskTime(1)))> >= rtP.Step1_Time);
+    if (rtDW.blvhujflm2 == 1) {
+        rtB.jufilka5sx = rtP.Step1_YFinal;
+    } else {
+        rtB.jufilka5sx = rtP.Step1_Y0;
+    }
+%<tlcOutputsFcnOfS1B0>\
+    rtDW.icelhotwyq = (%<(SLibCG_SE(LibGetTaskTime(1)))> >= rtP.Step2_Time);
+    if (rtDW.icelhotwyq == 1) {
+        tmp = rtP.Step2_YFinal;
+    } else {
+        tmp = rtP.Step2_Y0;
+    }
+    rtB.ijj5qjnpre = rtP.Gain3_Gain * tmp;
+}
+memcpy(&rtB.mctuceuj3f[0], &rtX.d1fakn4obc[0], 12U * sizeof(real_T));
+rtB.iuztmp4dyk = rtP.Gain2_Gain * rtB.mctuceuj3f[2];
+rtB.o53aczn3pi = rtP.Gain_Gain * muDoubleScalarSin(rtB.mctuceuj3f[6]);
+rtB.mf3qeq0egv = rtB.iuztmp4dyk + rtB.o53aczn3pi;
+rtB.m43oiulvan = rtB.mf3qeq0egv / muDoubleScalarCos(rtB.mctuceuj3f[6]);
+rtB.aisus3y001 = rtB.m43oiulvan / muDoubleScalarCos(rtB.mctuceuj3f[7]);
+rtB.eziu442bi0 = rtB.aisus3y001 - rtB.ijj5qjnpre;
+rtB.fein5vkbae = rtP.PIDController_P * rtB.eziu442bi0;
+rtB.g4kpamugmi = rtX.nkqn24bgfm;
+rtB.ho3yh1nf3i = rtP.PIDController_D * rtB.eziu442bi0;
+rtB.dxyhh24bkl = rtX.owhqxbbche;
+rtB.e2chm1icog = rtB.ho3yh1nf3i - rtB.dxyhh24bkl;
+rtB.bjvbrcat2g = rtP.PIDController_N * rtB.e2chm1icog;
+rtB.gefhouzr0z = (rtB.fein5vkbae + rtB.g4kpamugmi) + rtB.bjvbrcat2g;
+if (%<(LibIsMajorTimeStep())>) {
+    rtDW.ld5ideccqm = rtB.gefhouzr0z >= rtP.PIDController_UpperSaturationLimit ? 1 : rtB.gefhouzr0z > rtP.PIDController_LowerSaturationLimit ? 0 : -1;
+}
+rtB.pqdlhvqpbm = rtDW.ld5ideccqm == 1 ? rtP.PIDController_UpperSaturationLimit : rtDW.ld5ideccqm == -1 ? rtP.PIDController_LowerSaturationLimit : rtB.gefhouzr0z;
+rtB.abty4iokl5 = rtP.Gain1_Gain * rtB.pqdlhvqpbm;
+rtB.enp15pcuw3 = rtP.Gain4_Gain * rtB.pqdlhvqpbm;
+rtB.lmeyjydvnb = rtB.jufilka5sx - rtB.mctuceuj3f[7];
+rtB.haefwbwmz5 = rtP.PIDController1_P * rtB.lmeyjydvnb;
+rtB.k3mc1nabg4 = rtX.gja3gfdzbq;
+rtB.m0lqbfm3tm = rtP.PIDController1_D * rtB.lmeyjydvnb;
+rtB.nwzhmtb3tb = rtX.cnd1thbbz4;
+rtB.iqwnicdytf = rtB.m0lqbfm3tm - rtB.nwzhmtb3tb;
+rtB.ednrg2rz4r = rtP.PIDController1_N * rtB.iqwnicdytf;
+rtB.k5lxdd4e3c = (rtB.haefwbwmz5 + rtB.k3mc1nabg4) + rtB.ednrg2rz4r;
+if (%<(LibIsMajorTimeStep())>) {
+    rtDW.hj31jvhuh1 = rtB.k5lxdd4e3c >= rtP.PIDController1_UpperSaturationLimit ? 1 : rtB.k5lxdd4e3c > rtP.PIDController1_LowerSaturationLimit ? 0 : -1;
+}
+rtB.p0qtjzktiu = rtDW.hj31jvhuh1 == 1 ? rtP.PIDController1_UpperSaturationLimit : rtDW.hj31jvhuh1 == -1 ? rtP.PIDController1_LowerSaturationLimit : rtB.k5lxdd4e3c;
+rtB.gtybciop0z = rtP.Gain5_Gain * rtB.p0qtjzktiu;
+rtB.ngn4tqpcds = rtP.Gain6_Gain * rtB.p0qtjzktiu;
+rtB.n2bem35ub4 = rtP.PIDController_I * rtB.eziu442bi0;
+rtB.px4ixvftgh = rtP.PIDController1_I * rtB.lmeyjydvnb;
+rtB.ddhrpfrei4 = rtB.enp15pcuw3 + rtB.p0qtjzktiu;
+rtB.iagp2halcm = rtB.abty4iokl5 + rtB.ngn4tqpcds;
+rtB.ehhtkclbfk = rtB.enp15pcuw3 - rtB.p0qtjzktiu;
+rtB.h0dwernavy = rtB.abty4iokl5 - rtB.gtybciop0z;
+rtB.cwdxssdrbd[0] = rtP.Multiply_Gain[0] * rtB.mctuceuj3f[0];
+rtB.cwdxssdrbd[1] = rtP.Multiply_Gain[1] * rtB.mctuceuj3f[1];
+rtB.cwdxssdrbd[2] = rtP.Multiply_Gain[2] * rtB.mctuceuj3f[2];
+%<tlcOutputsFcnOfS1B2>\
+%<tlcOutputsFcnOfS1B3>\
+if (%<(SLibCGIRIsSampleHit(1, 1))>) {
+    rtDW.cqlzf1k4iv = (%<(SLibCG_SE(LibGetTaskTime(1)))> >= rtP.Step_Time);
+    if (rtDW.cqlzf1k4iv == 1) {
+        rtB.gjum14h2ao = rtP.Step_YFinal;
+    } else {
+        rtB.gjum14h2ao = rtP.Step_Y0;
+    }
+}
+%<tlcOutputsFcnOfS1B4>\
+%<SLibInsertSolverResetCode()>\
+%closefile cfgTxt
+%<cfgTxt>
+%<LibSetSystemField(system, "CachedOutputLocalVars", localVarDecl)>
+%endfunction
+%function OutputsFcnProtoType(block, system) Output
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void Outputs(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 2, fcnProtoType)>
+%endfunction

@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "c:/Users/Vlad/Documents/jetskiproject/modelcode/src/main.py", line 18, in <module>
+    from servo import *
+  File "c:\Users\Vlad\Documents\jetskiproject\modelcode\src\servo.py", line 1, in <module>
+    import pigpio
+ImportError: No module named pigpio

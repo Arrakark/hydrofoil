@@ -1,0 +1,31 @@
+%implements s1_b0_xoa9h_ZeroCrossings "C"
+
+%function ZeroCrossings(block, system) Output
+%assign cfgTxt = ""
+%openfile cfgTxt
+%assign localVarDecl = ""
+%openfile localVarDecl
+
+ZCV *_rtZCSV;
+%closefile localVarDecl
+%<SLibCG_TrackZCSV(1)>\
+_rtZCSV = %<(SLibCG_SE(SLibGetZCSignalValueStrucPtr()))>;
+_rtZCSV->j1owczdvna = %<(SLibCG_SE(LibGetT()))> - rtP.Step1_Time;
+_rtZCSV->jeidrs3pny = %<(SLibCG_SE(LibGetT()))> - rtP.Step2_Time;
+_rtZCSV->acdsn01435 = rtB.gefhouzr0z - rtP.PIDController_UpperSaturationLimit;
+_rtZCSV->orrdf4s13q = rtB.gefhouzr0z - rtP.PIDController_LowerSaturationLimit;
+_rtZCSV->pujw4ybsgm = rtB.k5lxdd4e3c - rtP.PIDController1_UpperSaturationLimit;
+_rtZCSV->dj1r0032wt = rtB.k5lxdd4e3c - rtP.PIDController1_LowerSaturationLimit;
+_rtZCSV->hyunxjmjfj = %<(SLibCG_SE(LibGetT()))> - rtP.Step_Time;
+%closefile cfgTxt
+%<cfgTxt>
+%<LibSetSystemField(system, "CachedZeroCrossingLocalVars", localVarDecl)>
+%endfunction
+%function ZeroCrossingsFcnProtoType(block, system) Output
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void ZeroCrossings(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(0, 5, fcnProtoType)>
+%endfunction

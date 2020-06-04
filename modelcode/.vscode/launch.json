@@ -1,0 +1,48 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+        "name": "Attach (Remote Debug)",
+        "type": "python",
+        "request": "attach",
+        "pathMappings": [
+          {
+            "localRoot": "${workspaceRoot}/src", // Maps C:\Users\user1\project1
+            "remoteRoot": "/home/pi/pythondev/src" // To current working directory ~/project1
+          }
+        ],
+        "host": "192.168.137.174",
+        "preLaunchTask": "remote-deploy-debug",
+        "port": 5678
+    },
+    {
+        "name": "Run (Remote)",
+        "type": "python",
+        "request": "attach",
+        "pathMappings": [
+          {
+            "localRoot": "${workspaceRoot}/src", // Maps C:\Users\user1\project1
+            "remoteRoot": "/home/pi/pythondev/src" // To current working directory ~/project1
+          }
+        ],
+        "port": 5678,
+        "host": "192.168.137.174",
+        "preLaunchTask": "remote-deploy-run"
+    },
+    {
+        "name": "Stop (Remote)",
+        "type": "python",
+        "request": "attach",
+        "pathMappings": [
+          {
+            "localRoot": "${workspaceRoot}/src", // Maps C:\Users\user1\project1
+            "remoteRoot": "/home/pi/pythondev/src" // To current working directory ~/project1
+          }
+        ],
+        "port": 5678,
+        "host": "192.168.137.174",
+        "preLaunchTask": "remote-stop"
+    }
+  ]
+}
+
